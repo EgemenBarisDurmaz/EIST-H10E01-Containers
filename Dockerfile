@@ -10,4 +10,4 @@ COPY build/libs/H10E01-Containers-1.0.0.jar app.jar
 # TODO: Make start.sh executable
 RUN chmod 770 start.sh
 # TODO: Set the start command
-CMD ["./start.sh"]
+CMD ["./start.sh"

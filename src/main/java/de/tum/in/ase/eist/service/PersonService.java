@@ -54,12 +54,18 @@ public class PersonService {
     }
 
     public Person removeParent(Person person, Person parent) {
-        // TODO: Implement
-        return null;
+        if (person.getParents().toArray().length < 1) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Should have at least 1 parent");
+        }
+        person.getParents().remove(person);
+        return personRepository.save(person);
     }
 
     public Person removeChild(Person person, Person child) {
-        // TODO: Implement
-        return null;
+        if (person.getParents().toArray().length < 1) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Should have at least 1 parent");
+        }
+        person.getChildren().remove(child);
+        return personRepository.save(person);
     }
 }

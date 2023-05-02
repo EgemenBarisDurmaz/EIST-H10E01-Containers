@@ -38,13 +38,18 @@ public class PersonService {
     }
 
     public Person addParent(Person person, Person parent) {
-        // TODO: Implement
-        return null;
+        if (person.getParents().toArray().length == 2) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Person cannot have more than 2 parents");
+        }
+        person.getParents().add(parent);
+        return personRepository.save(person);
     }
 
     public Person addChild(Person person, Person child) {
-        // TODO: Implement
-        return null;
+        if (person.getParents().toArray().length == 2) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Person cannot have more than 2 parents");
+        }
+        return personRepository.save(person);
     }
 
     public Person removeParent(Person person, Person parent) {

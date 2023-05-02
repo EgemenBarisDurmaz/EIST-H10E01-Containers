@@ -67,6 +67,5 @@ public class PersonService {
         }
         person.getChildren().remove(child);
         return personRepository.save(person);
-        //trial
     }
 }

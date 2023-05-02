@@ -46,9 +46,10 @@ public class PersonService {
     }
 
     public Person addChild(Person person, Person child) {
-        if (person.getParents().toArray().length == 2) {
+        if (child.getParents().toArray().length > 2) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Person cannot have more than 2 parents");
         }
+        person.getChildren().add(child);
         return personRepository.save(person);
     }
 

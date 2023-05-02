@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -77,8 +78,10 @@ class PersonServiceTest {
         ps.addParent(child, parent2);
         assertEquals(4, personRepository.findAll().size());
         assertEquals(2, child.getParents().size());
-        assertThrows(ResponseStatusException.class, () -> { personService.addParent(child, parent3);
-        }, "Max #parent can be 2.");
+        personService.addParent(child, parent3);
+        assertThrows(ResponseStatusException.class, () -> {
+            personService.addParent(child, parent3);
+        }, "Adding more than two parents is not allowed.");
     }
 
 }

@@ -52,4 +52,14 @@ class PersonServiceTest {
     }
 
     // TODO: Add more test cases here
+    @Test
+    void testAddParent() {
+        var child = new Person();
+        var parent = new Person();
+        personRepository.save(child);
+        personRepository.save(parent);
+        PersonService ps = new PersonService(personRepository);
+        ps.addParent(child, parent);
+        assertEquals(2, personRepository.findAll().size());
+    }
 }

@@ -46,7 +46,7 @@ public class PersonService {
     }
 
     public Person addChild(Person person, Person child) {
-        if (child.getParents().toArray().length > 2) {
+        if (child.getParents().toArray().length > 1) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Person cannot have more than 2 parents");
         }
         person.getChildren().add(child);
@@ -54,7 +54,7 @@ public class PersonService {
     }
 
     public Person removeParent(Person person, Person parent) {
-        if (person.getParents().toArray().length < 1) {
+        if (person.getParents().toArray().length == 0 || person.getParents().toArray().length == 1)  {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Should have at least 1 parent");
         }
         person.getParents().remove(person);
@@ -62,7 +62,7 @@ public class PersonService {
     }
 
     public Person removeChild(Person person, Person child) {
-        if (person.getParents().toArray().length <= 1) {
+        if (person.getParents().toArray().length == 0 || person.getParents().toArray().length == 1) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Should have at least 1 parent");
         }
         person.getChildren().remove(child);

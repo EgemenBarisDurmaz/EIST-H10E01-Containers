@@ -9,11 +9,11 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase
@@ -62,4 +62,23 @@ class PersonServiceTest {
         ps.addParent(child, parent);
         assertEquals(2, personRepository.findAll().size());
     }
+    @Test
+    void testAddThreeParents() {
+        var child = new Person();
+        var parent1 = new Person();
+        var parent2 = new Person();
+        var parent3 = new Person();
+        personRepository.save(child);
+        personRepository.save(parent1);
+        personRepository.save(parent2);
+        personRepository.save(parent3);
+        PersonService ps = new PersonService(personRepository);
+        ps.addParent(child, parent1);
+        ps.addParent(child, parent2);
+        assertEquals(4, personRepository.findAll().size());
+        assertEquals(2, child.getParents().size());
+        assertThrows(ResponseStatusException.class, () -> { personService.addParent(child, parent3);
+        }, "Max #parent can be 2.");
+    }
+
 }

@@ -64,6 +64,7 @@ public class PersonService {
     public Person removeChild(Person person, Person child) {
         if (child.getParents().toArray().length > 1) {
             person.getChildren().remove(child);
+
             return personRepository.save(person);
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "child has to have a number of parents greater than 1");

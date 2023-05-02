@@ -62,7 +62,7 @@ public class PersonService {
     }
 
     public Person removeChild(Person person, Person child) {
-        if (person.getParents().toArray().length < 1) {
+        if (person.getParents().toArray().length <= 1) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Should have at least 1 parent");
         }
         person.getChildren().remove(child);
